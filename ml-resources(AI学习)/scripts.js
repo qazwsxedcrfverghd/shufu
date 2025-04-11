@@ -453,5 +453,362 @@ function updateNavLinks(category) {
     });
 }
 
-// 页面加载完成后初始化
-document.addEventListener('DOMContentLoaded', initPage); 
+// 页面加载完成后执行
+document.addEventListener('DOMContentLoaded', function() {
+    // 初始化页面
+    initializeApp();
+});
+
+// 应用初始化
+function initializeApp() {
+    // 合并所有资源数据
+    combineResources();
+    
+    // 生成分类标签
+    generateCategories();
+    
+    // 显示所有资源
+    displayAllResources();
+    
+    // 设置搜索功能
+    setupSearch();
+    
+    // 添加事件监听器
+    addEventListeners();
+}
+
+// 生成分类标签
+function generateCategories() {
+    const categoryList = document.getElementById('category-list');
+    categoryList.innerHTML = ''; // 清空现有内容
+    
+    const categories = new Set();
+    
+    // 从所有数据源收集分类
+    allResources.forEach(resource => {
+        if (resource.category) categories.add(resource.category);
+    });
+    
+    // 添加"全部"按钮
+    const allBtn = document.createElement('button');
+    allBtn.className = 'category-btn active';
+    allBtn.textContent = '全部';
+    allBtn.addEventListener('click', () => {
+        updateCategoryButtons('全部');
+        displayAllResources();
+    });
+    categoryList.appendChild(allBtn);
+    
+    // 创建分类按钮
+    Array.from(categories).sort().forEach(category => {
+        const categoryBtn = document.createElement('button');
+        categoryBtn.className = 'category-btn';
+        categoryBtn.textContent = category;
+        categoryBtn.addEventListener('click', () => {
+            updateCategoryButtons(category);
+            filterByCategory(category);
+        });
+        categoryList.appendChild(categoryBtn);
+    });
+}
+
+// 更新分类按钮样式
+function updateCategoryButtons(selectedCategory) {
+    document.querySelectorAll('.category-btn').forEach(btn => {
+        if (btn.textContent === selectedCategory) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
+}
+
+// 显示所有资源
+function displayAllResources() {
+    const resourceList = document.getElementById('resource-list');
+    resourceList.innerHTML = '';
+    
+    if (allResources.length === 0) {
+        const noResult = document.createElement('div');
+        noResult.className = 'no-result';
+        noResult.textContent = '暂无资源';
+        resourceList.appendChild(noResult);
+        return;
+    }
+    
+    allResources.forEach(resource => {
+        const type = resource.type || '资源';
+        resourceList.appendChild(createResourceCard(resource, type));
+    });
+}
+
+// 按分类筛选资源
+function filterByCategory(category) {
+    currentFilter.category = category;
+    
+    const resourceList = document.getElementById('resource-list');
+    resourceList.innerHTML = '';
+    
+    const filteredResources = allResources.filter(resource => 
+        resource.category === category
+    );
+    
+    if (filteredResources.length === 0) {
+        const noResult = document.createElement('div');
+        noResult.className = 'no-result';
+        noResult.textContent = `没有找到分类为"${category}"的资源`;
+        resourceList.appendChild(noResult);
+        return;
+    }
+    
+    filteredResources.forEach(resource => {
+        const type = resource.type || '资源';
+        resourceList.appendChild(createResourceCard(resource, type));
+    });
+}
+
+// 创建资源卡片
+function createResourceCard(resource, type) {
+    const card = document.createElement('div');
+    card.className = 'resource-card';
+    
+    // 添加资源ID用于收藏功能
+    const resourceId = `resource-${Math.random().toString(36).substr(2, 9)}`;
+    card.setAttribute('data-resource-id', resourceId);
+    
+    // 添加收藏按钮
+    const favoriteBtn = document.createElement('button');
+    favoriteBtn.className = 'favorite-button';
+    favoriteBtn.innerHTML = '🤍 收藏';
+    favoriteBtn.setAttribute('data-resource-id', resourceId);
+    favoriteBtn.addEventListener('click', function() {
+        toggleFavorite(resourceId);
+    });
+    card.appendChild(favoriteBtn);
+    
+    // 添加资源类型标签
+    const typeTag = document.createElement('span');
+    typeTag.className = 'resource-type';
+    typeTag.textContent = type;
+    card.appendChild(typeTag);
+    
+    // 添加资源标题
+    const title = document.createElement('h3');
+    title.textContent = resource.title || '未命名资源';
+    card.appendChild(title);
+    
+    // 添加资源描述（如果有）
+    if (resource.description) {
+        const description = document.createElement('p');
+        description.textContent = resource.description;
+        card.appendChild(description);
+    }
+    
+    // 添加资源链接
+    if (resource.link) {
+        const link = document.createElement('a');
+        link.href = resource.link;
+        link.target = '_blank';
+        link.textContent = '查看详情';
+        card.appendChild(link);
+    }
+    
+    // 添加资源标签（如果有）
+    if (resource.category) {
+        const category = document.createElement('span');
+        category.className = 'resource-category';
+        category.textContent = resource.category;
+        card.appendChild(category);
+    }
+    
+    // 添加资源类型标签（如果有type且不等于传入的type）
+    if (resource.type && resource.type !== type) {
+        const resType = document.createElement('span');
+        resType.className = 'resource-category';
+        resType.textContent = resource.type;
+        card.appendChild(resType);
+    }
+    
+    return card;
+}
+
+// 设置搜索功能
+function setupSearch() {
+    const searchInput = document.getElementById('search-input');
+    const searchBtn = document.getElementById('search-btn');
+    
+    // 点击搜索按钮时搜索
+    searchBtn.addEventListener('click', () => {
+        const searchTerm = searchInput.value.toLowerCase().trim();
+        searchResources(searchTerm);
+    });
+    
+    // 按回车键时搜索
+    searchInput.addEventListener('keyup', (event) => {
+        if (event.key === 'Enter') {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            searchResources(searchTerm);
+        }
+    });
+}
+
+// 搜索资源
+function searchResources(searchTerm) {
+    currentFilter.searchTerm = searchTerm;
+    
+    // 重置分类按钮
+    updateCategoryButtons('全部');
+    
+    const resourceList = document.getElementById('resource-list');
+    resourceList.innerHTML = '';
+    
+    if (!searchTerm) {
+        displayAllResources();
+        return;
+    }
+    
+    const filteredResources = allResources.filter(resource => 
+        (resource.title && resource.title.toLowerCase().includes(searchTerm)) || 
+        (resource.description && resource.description.toLowerCase().includes(searchTerm)) ||
+        (resource.category && resource.category.toLowerCase().includes(searchTerm)) ||
+        (resource.type && resource.type.toLowerCase().includes(searchTerm))
+    );
+    
+    if (filteredResources.length === 0) {
+        const noResult = document.createElement('div');
+        noResult.className = 'no-result';
+        noResult.textContent = `没有找到包含"${searchTerm}"的资源`;
+        resourceList.appendChild(noResult);
+        return;
+    }
+    
+    filteredResources.forEach(resource => {
+        const type = resource.type || '资源';
+        resourceList.appendChild(createResourceCard(resource, type));
+    });
+}
+
+// 添加其他事件监听器
+function addEventListeners() {
+    // 检查URL中是否有查询参数
+    const urlParams = new URLSearchParams(window.location.search);
+    const categoryParam = urlParams.get('category');
+    const searchParam = urlParams.get('search');
+    
+    // 如果有category参数，按分类筛选
+    if (categoryParam) {
+        const categoryBtns = document.querySelectorAll('.category-btn');
+        const matchingBtn = Array.from(categoryBtns).find(btn => btn.textContent === categoryParam);
+        if (matchingBtn) {
+            matchingBtn.click();
+        }
+    }
+    
+    // 如果有search参数，执行搜索
+    if (searchParam) {
+        document.getElementById('search-input').value = searchParam;
+        searchResources(searchParam);
+    }
+}
+
+// 收藏/取消收藏资源
+function toggleFavorite(resourceId) {
+    // 从本地存储获取当前收藏列表
+    let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+    
+    // 检查资源是否已收藏
+    const index = favorites.indexOf(resourceId);
+    
+    if (index === -1) {
+        // 添加到收藏
+        favorites.push(resourceId);
+        console.log('已收藏:', resourceId);
+    } else {
+        // 从收藏中移除
+        favorites.splice(index, 1);
+        console.log('已取消收藏:', resourceId);
+    }
+    
+    // 保存到本地存储
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+    
+    // 更新UI显示
+    updateFavoriteUI(resourceId, index === -1);
+}
+
+// 更新收藏按钮UI
+function updateFavoriteUI(resourceId, isFavorited) {
+    document.querySelectorAll(`.favorite-button[data-resource-id="${resourceId}"]`).forEach(button => {
+        if (isFavorited) {
+            button.classList.add('favorited');
+            button.innerHTML = '❤️ 已收藏';
+        } else {
+            button.classList.remove('favorited');
+            button.innerHTML = '🤍 收藏';
+        }
+    });
+}
+
+// 添加API接口，用于将来与后端服务交互
+const API = {
+    // 获取远程数据
+    fetchData: async function(endpoint) {
+        try {
+            const response = await fetch(endpoint);
+            if (!response.ok) {
+                throw new Error('网络响应不正常');
+            }
+            return await response.json();
+        } catch (error) {
+            console.error('获取数据失败:', error);
+            return null;
+        }
+    },
+    
+    // 提交数据到远程服务器
+    submitData: async function(endpoint, data) {
+        try {
+            const response = await fetch(endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+            
+            if (!response.ok) {
+                throw new Error('提交数据失败');
+            }
+            
+            return await response.json();
+        } catch (error) {
+            console.error('提交数据失败:', error);
+            return null;
+        }
+    }
+};
+
+// 用于Vercel无服务器函数的示例
+// 可以在将来实现动态数据获取
+function loadDynamicData() {
+    // 示例：获取最新资源
+    API.fetchData('/api/latest-resources')
+        .then(data => {
+            if (data) {
+                // 更新显示
+                console.log('获取到最新资源:', data);
+                // 处理获取到的数据
+            }
+        });
+}
+
+// 添加用户交互功能
+function setupUserInteractions() {
+    // 实现收藏功能
+    document.querySelectorAll('.favorite-button').forEach(button => {
+        button.addEventListener('click', function() {
+            const resourceId = this.getAttribute('data-resource-id');
+            toggleFavorite(resourceId);
+        });
+    });
+} 
