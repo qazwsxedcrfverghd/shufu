@@ -198,6 +198,7 @@ main {
     color: #222;
     font-size: 1.2rem;
     padding-right: 60px; /* 为资源类型标签留出空间 */
+    padding-left: 30px; /* 为收藏按钮留出空间 */
 }
 
 .resource-card p {
