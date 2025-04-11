@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>机器学习资源导航网站</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        // 初始化默认数据，防止未定义错误
+        var resourcesData = { books: [] };
+        var additionalResources = {
+            blogs: [],
+            podcasts: [],
+            newsletters: [],
+            practice: [],
+            datascience: [],
+            math: [],
+            security: []
+        };
+        var courseResources = { courses: [] };
+        var meetupResources = { meetups: [] };
+        var learningPathResources = { beginner_path: [] };
+    </script>
+</head>
+<body>
+    <header>
+        <h1>机器学习资源导航</h1>
+    </header>
+
+    <main>
+        <section class="search-section">
+            <input type="text" id="search-input" placeholder="搜索资源...">
+            <button id="search-btn">搜索</button>
+        </section>
+
+        <section class="category-section">
+            <h2>分类浏览</h2>
+            <div class="category-list" id="category-list">
+                <!-- 分类标签将通过JavaScript动态生成 -->
+            </div>
+        </section>
+
+        <section class="resource-section">
+            <h2>推荐资源</h2>
+            <div class="resource-grid" id="resource-list">
+                <!-- 资源列表将通过JavaScript动态生成 -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>机器学习资源导航网站</p>
+    </footer>
+
+    <script src="data.js"></script>
+    <script src="resources.js"></script>
+    <script src="courses.js"></script>
+    <script src="meetups.js"></script>
+    <script src="learning-paths.js"></script>
+    <script src="scripts.js"></script>
+</body>
+</html> 
