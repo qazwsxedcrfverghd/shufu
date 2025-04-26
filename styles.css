@@ -1,429 +1,498 @@
-/* 基础样式设置 */
+/* 全局样式 */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
 }
 
 body {
-    font-family: 'Microsoft YaHei', sans-serif;
-    line-height: 1.6;
-    background-color: #f5f5f5;
+    background-color: #f5f7fa;
     color: #333;
-}
-
-a {
-    text-decoration: none;
-    color: inherit;
-}
-
-h1, h2, h3 {
-    margin-bottom: 1rem;
+    line-height: 1.6;
 }
 
 /* 头部样式 */
 header {
-    background-color: #1e88e5;
+    background: linear-gradient(135deg, #4a00e0 0%, #3f5efb 100%);
     color: white;
-    padding: 1.5rem 2rem;
     text-align: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 2rem 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 header h1 {
+    margin: 0;
     font-size: 2.5rem;
-    margin-bottom: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 1px;
 }
 
-nav ul {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-top: 0.5rem;
-}
-
-nav ul li {
-    margin: 0.5rem;
-}
-
-nav ul li a {
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    transition: all 0.3s ease;
-    display: block;
-}
-
-nav ul li a:hover,
-nav ul li a.active {
-    background-color: #1565c0;
-}
-
-/* 主内容区样式 */
+/* 主要内容区域 */
 main {
     max-width: 1200px;
-    margin: 1rem auto;
-    padding: 0 1rem;
+    margin: 2rem auto;
+    padding: 0 2rem;
 }
 
-/* 搜索区域样式 */
+/* 搜索部分 */
 .search-section {
     display: flex;
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
-    margin-top: 0.5rem;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+    gap: 10px;
+}
+
+/* 收藏按钮 */
+.favorites-btn {
+    padding: 0.6rem 1.3rem;
+    background: #4a00e0;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.favorites-btn::before {
+    content: '';
+    display: none;
+}
+
+.favorites-btn:hover {
+    background: #3900b3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(74, 0, 224, 0.2);
+}
+
+.favorites-btn.active {
+    background: #3900b3;
+    box-shadow: 0 4px 12px rgba(74, 0, 224, 0.3);
+}
+
+/* 返回按钮 */
+.back-btn {
+    padding: 0.6rem 1.3rem;
+    background: #4a00e0;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: none; /* 默认隐藏 */
+}
+
+.back-btn:hover {
+    background: #3900b3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(74, 0, 224, 0.2);
+}
+
+.back-btn.active {
+    display: inline-block;
 }
 
 #search-input {
-    flex: 1;
-    padding: 0.75rem;
+    width: 60%;
+    max-width: 600px;
+    padding: 0.8rem 1.2rem;
     border: 1px solid #ddd;
-    border-radius: 4px;
+    border-radius: 30px 0 0 30px;
     font-size: 1rem;
+    outline: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+#search-input:focus {
+    border-color: #3f5efb;
+    box-shadow: 0 2px 12px rgba(63, 94, 251, 0.2);
 }
 
 #search-btn {
-    padding: 0.75rem 1.5rem;
-    background-color: #1e88e5;
+    padding: 0.8rem 1.5rem;
+    background: #3f5efb;
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 0 30px 30px 0;
     cursor: pointer;
-    transition: background-color 0.3s;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background 0.3s ease;
 }
 
 #search-btn:hover {
-    background-color: #1565c0;
+    background: #304bd9;
 }
 
-/* 分类区域样式 */
+/* 分类部分 */
 .category-section {
     margin-bottom: 2rem;
+    text-align: center;
 }
 
 .category-section h2 {
     font-size: 1.8rem;
+    margin-bottom: 1.5rem;
     color: #333;
-    margin-bottom: 1rem;
+    position: relative;
+    display: inline-block;
+}
+
+.category-section h2:after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: #3f5efb;
+    border-radius: 2px;
 }
 
 .category-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    justify-content: center;
+    gap: 10px;
+    padding: 1rem 0;
 }
 
-.category-tag {
-    padding: 0.5rem 1rem;
-    background-color: #e3f2fd;
+.category-btn {
+    padding: 8px 16px;
+    background-color: #fff;
+    color: #555;
+    border: 1px solid #e0e0e0;
     border-radius: 20px;
     cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
     transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 
-.category-tag:hover,
-.category-tag.active {
-    background-color: #1e88e5;
+.category-btn:hover {
+    background-color: #f0f7ff;
+    border-color: #90c1ff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(63, 94, 251, 0.15);
+}
+
+.category-btn.active {
+    background-color: #3f5efb;
     color: white;
+    border-color: #3f5efb;
+    box-shadow: 0 4px 8px rgba(63, 94, 251, 0.25);
 }
 
-/* 创建资源类型分类标签样式 */
-.category-tag.location-tag {
-    background-color: #e8f5e9;
-    color: #2e7d32;
+/* 资源卡片部分 */
+.resource-section {
+    margin-bottom: 3rem;
 }
 
-.category-tag.location-tag:hover,
-.category-tag.location-tag.active {
-    background-color: #2e7d32;
-    color: white;
-}
-
-/* 资源区域样式 */
 .resource-section h2 {
     font-size: 1.8rem;
+    margin-bottom: 1.5rem;
     color: #333;
-    margin-bottom: 1rem;
+    position: relative;
+    display: inline-block;
 }
 
-/* 资源卡片样式 */
+.resource-section h2:after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: #3f5efb;
+    border-radius: 2px;
+}
+
 .resource-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 1.5rem;
 }
 
 .resource-card {
     background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    padding: 1.5rem;
+    margin-bottom: 20px;
 }
 
 .resource-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
 }
 
 .resource-card h3 {
-    padding: 1rem;
-    background-color: #e3f2fd;
+    margin-top: 25px !important;
+    margin-bottom: 0.8rem;
+    color: #222;
     font-size: 1.2rem;
+    padding-right: 50px;
+    padding-left: 15px;
+    min-height: 2.4rem;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    position: relative;
 }
 
-.resource-card .category {
-    display: inline-block;
-    margin: 0 1rem;
-    padding: 0.25rem 0.5rem;
-    background-color: #bbdefb;
-    border-radius: 4px;
-    font-size: 0.8rem;
-}
-
-.resource-card .type {
-    display: inline-block;
-    margin: 0 1rem;
-    padding: 0.25rem 0.5rem;
-    border-radius: 4px;
-    font-size: 0.8rem;
-}
-
-/* 地点标签样式 */
-.resource-card .location {
-    display: inline-block;
-    margin: 0 1rem;
-    padding: 0.25rem 0.5rem;
-    background-color: #e8f5e9;
-    color: #2e7d32;
-    border-radius: 4px;
-    font-size: 0.8rem;
-}
-
-/* 不同资源类型的颜色 */
-.resource-card .type[data-type="Book"] {
-    background-color: #e8f5e9;
-    color: #2e7d32;
-}
-
-.resource-card .type[data-type="Blog"] {
-    background-color: #fff8e1;
-    color: #ff8f00;
-}
-
-.resource-card .type[data-type="Podcast"] {
-    background-color: #e1f5fe;
-    color: #0288d1;
-}
-
-.resource-card .type[data-type="Newsletter"] {
-    background-color: #f3e5f5;
-    color: #7b1fa2;
-}
-
-.resource-card .type[data-type="Practice"] {
-    background-color: #ffe0b2;
-    color: #e65100;
-}
-
-.resource-card .type[data-type="Website"] {
-    background-color: #e0f2f1;
-    color: #00796b;
-}
-
-/* 课程资源类型样式 */
-.resource-card .type[data-type="免费课程"] {
-    background-color: #e8eaf6;
-    color: #303f9f;
-}
-
-.resource-card .type[data-type="付费课程"] {
-    background-color: #fce4ec;
-    color: #c2185b;
-}
-
-.resource-card .type[data-type="免费审计/付费证书"] {
-    background-color: #f9fbe7;
-    color: #827717;
-}
-
-.resource-card .type[data-type="免费和付费结合"] {
-    background-color: #e0f7fa;
-    color: #006064;
-}
-
-.resource-card .type[data-type="在线课程"] {
-    background-color: #efebe9;
-    color: #5d4037;
-}
-
-.resource-card .type[data-type="免费视频课程"] {
-    background-color: #e3f2fd;
-    color: #0d47a1;
-}
-
-.resource-card .type[data-type="付费图书"] {
-    background-color: #ffebee;
-    color: #b71c1c;
-}
-
-.resource-card .type[data-type="免费资源"] {
-    background-color: #f1f8e9;
-    color: #558b2f;
-}
-
-.resource-card .type[data-type="付费项目"] {
-    background-color: #fff3e0;
-    color: #e65100;
-}
-
-.resource-card .type[data-type="Coursera专项课程"] {
-    background-color: #e8f5e9;
-    color: #2e7d32;
-}
-
-.resource-card .type[data-type="付费课程(有助学金)"] {
-    background-color: #ede7f6;
-    color: #4527a0;
-}
-
-.resource-card .description {
-    padding: 1rem;
+.resource-card p {
     color: #666;
+    margin-bottom: 1.2rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    /* 多行文本截断的更兼容实现 */
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    max-height: 4.5em; /* 行高1.5 × 3行 = 4.5em */
+    text-overflow: ellipsis;
 }
 
-.resource-card .link {
-    display: block;
-    padding: 0.75rem;
-    text-align: center;
-    background-color: #1e88e5;
+.resource-card a {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #3f5efb;
     color: white;
-    font-weight: bold;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: background 0.3s ease;
 }
 
-/* 无结果提示样式 */
-.no-result {
-    grid-column: 1 / -1;
-    text-align: center;
-    padding: 2rem;
-    font-size: 1.2rem;
+.resource-card a:hover {
+    background-color: #304bd9;
+    color: white;
+}
+
+.resource-category {
+    display: inline-block;
+    margin-right: 8px;
+    margin-top: 0.8rem;
+    padding: 4px 10px;
+    background: #f5f5f5;
     color: #666;
+    font-size: 0.75rem;
+    border-radius: 4px;
 }
 
-/* 页脚样式 */
+/* 底部样式 */
 footer {
-    text-align: center;
-    padding: 2rem;
-    background-color: #1e88e5;
+    background-color: #4a00e0;
     color: white;
+    text-align: center;
+    padding: 1.5rem 0;
     margin-top: 2rem;
 }
 
+/* 收藏按钮样式 - 重写为更简单的实现 */
+.favorite-btn {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    width: 30px;
+    height: 30px;
+    border: none;
+    background: none;
+    color: #ff4757;
+    font-size: 28px; /* 增大字体大小 */
+    cursor: pointer;
+    z-index: 100;
+    padding: 0;
+    margin: 0;
+    line-height: 1;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1); /* 添加文本阴影增强立体感 */
+    transform-origin: center;
+}
+
+.favorite-btn:hover {
+    transform: scale(1.3);
+    color: #ff2c41; /* 悬停时颜色更深 */
+}
+
+.favorite-btn.active {
+    color: #ff2c41; /* 更深的红色 */
+    filter: drop-shadow(0 0 2px rgba(255,44,65,0.3)); /* 添加发光效果 */
+}
+
+.favorite-btn:focus {
+    outline: none;
+}
+
+/* 空心和实心心形的定义 */
+.favorite-btn:not(.active)::before {
+    content: "♡"; /* 空心心形 */
+}
+
+.favorite-btn.active::before {
+    content: "❤"; /* 实心心形 */
+}
+
+/* 资源类型标签 */
+.resource-type {
+    position: absolute !important;
+    top: 12px !important;
+    right: 12px !important;
+    padding: 4px 10px !important;
+    background: #f0f7ff !important;
+    color: #3f5efb !important;
+    font-size: 0.8rem !important;
+    font-weight: 600 !important;
+    border-radius: 30px !important;
+    z-index: 15 !important;
+}
+
+/* 没有结果提示 */
+.no-result {
+    text-align: center;
+    padding: 2rem;
+    background: #f9f9f9;
+    border-radius: 12px;
+    margin: 2rem auto;
+    max-width: 600px;
+    color: #666;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* 卡片删除动画 */
+.resource-card.removing {
+    transform: translateX(100px);
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+/* 收藏视图标题 */
+.view-title {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+    color: #444;
+    position: relative;
+}
+
+.view-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(135deg, #4a00e0 0%, #3f5efb 100%);
+    border-radius: 2px;
+}
+
+/* 收藏视图样式 */
+.resource-section h2.favorites-title {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: #333;
+    position: relative;
+    display: inline-block;
+}
+
+.resource-section h2.favorites-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: #4a00e0; /* 使用紫色渐变色开始部分 */
+    border-radius: 2px;
+}
+
+/* 没有收藏时的提示样式 */
+.no-favorites {
+    text-align: center;
+    padding: 3rem 1rem;
+    background: #f9f9f9;
+    border-radius: 12px;
+    margin: 2rem auto;
+    max-width: 600px;
+    color: #666;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.no-favorites p {
+    margin-bottom: 1rem;
+}
+
+.no-favorites .heart-icon {
+    font-size: 2.5rem;
+    color: #ff4757;
+    margin-bottom: 1rem;
+    display: block;
+}
+
 /* 响应式设计 */
-@media (max-width: 768px) {
-    nav ul {
-        flex-direction: column;
-        align-items: center;
+@media screen and (max-width: 768px) {
+    .resource-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+    
+    header h1 {
+        font-size: 2rem;
     }
     
     .search-section {
         flex-direction: column;
+        align-items: center;
+}
+
+    .favorites-btn {
+        margin-bottom: 10px;
+        width: 100%;
+        max-width: 600px;
+    }
+    
+    #search-input {
+        width: 100%;
+        border-radius: 30px;
+        margin-bottom: 10px;
+}
+
+    #search-btn {
+        width: 100%;
+        max-width: 600px;
+        border-radius: 30px;
+}
+}
+
+@media screen and (max-width: 480px) {
+    main {
+        padding: 0 1rem;
     }
     
     .resource-grid {
         grid-template-columns: 1fr;
     }
-}
-
-/* 学习路径卡片样式 */
-.learning-path-card {
-    border-left: 4px solid #1e88e5;
-    position: relative;
-}
-
-/* 根据步骤调整边框颜色 */
-.learning-path-card.step-1 {
-    border-left-color: #4caf50; /* 绿色 - 入门 */
-}
-
-.learning-path-card.step-2 {
-    border-left-color: #2196f3; /* 蓝色 - 基础 */
-}
-
-.learning-path-card.step-3 {
-    border-left-color: #9c27b0; /* 紫色 - 进阶 */
-}
-
-.learning-path-card.step-4 {
-    border-left-color: #ff9800; /* 橙色 - 补充 */
-}
-
-/* 步骤标签样式 */
-.resource-card .step {
-    display: inline-block;
-    margin: 0 1rem;
-    padding: 0.25rem 0.5rem;
-    background-color: #e8f5e9;
-    color: #2e7d32;
-    border-radius: 4px;
-    font-size: 0.8rem;
-    font-weight: bold;
-}
-
-/* 学习路径类型样式 */
-.resource-card .type[data-type="入门课程"] {
-    background-color: #e8f5e9;
-    color: #2e7d32;
-}
-
-.resource-card .type[data-type="基础教材"] {
-    background-color: #e3f2fd;
-    color: #1565c0;
-}
-
-.resource-card .type[data-type="进阶教材"] {
-    background-color: #f3e5f5;
-    color: #7b1fa2;
-}
-
-.resource-card .type[data-type="通俗读物"] {
-    background-color: #fff8e1;
-    color: #ff8f00;
-}
-
-/* 显示学习路径步骤的连接线 */
-@media (min-width: 768px) {
-    .resource-section {
-        position: relative;
-    }
     
-    .learning-path-card::before {
-        content: '';
-        position: absolute;
-        top: -20px;
-        left: -2px;
-        width: 4px;
-        height: 20px;
-        background-color: inherit;
-        display: block;
-    }
-    
-    .learning-path-card:first-child::before {
-        display: none;
-    }
-    
-    .learning-path-card::after {
-        content: '';
-        position: absolute;
-        bottom: -20px;
-        left: -2px;
-        width: 4px;
-        height: 20px;
-        background-color: inherit;
-        display: block;
-    }
-    
-    .learning-path-card:last-child::after {
-        display: none;
+    .category-btn {
+        font-size: 0.8rem;
+        padding: 6px 12px;
     }
 } 
