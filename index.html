@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>机器学习资源导航网站</title>
+    <title>AI学习资源导航网站</title>
     <link rel="stylesheet" href="styles.css">
     <script>
         // 初始化默认数据，防止未定义错误
@@ -21,14 +21,54 @@
         var meetupResources = { meetups: [] };
         var learningPathResources = { beginner_path: [] };
     </script>
+    <style>
+        /* 内嵌紧急修复样式，确保心形图标显示 */
+        .resource-card {
+            position: relative !important;
+        }
+        .favorite-btn {
+            position: absolute !important;
+            left: 10px !important;
+            top: 10px !important;
+            color: #ff4757 !important;
+            font-size: 24px !important;
+            z-index: 999 !important;
+            background: none !important;
+            border: none !important;
+            cursor: pointer !important;
+        }
+        
+        /* 返回按钮样式 */
+        .back-btn {
+            padding: 0.6rem 1.3rem;
+            background: #6a11cb;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            display: none; /* 默认隐藏 */
+        }
+        
+        .back-btn:hover {
+            background: #5a0cb7;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(106, 17, 203, 0.2);
+        }
+    </style>
 </head>
 <body>
     <header>
-        <h1>机器学习资源导航</h1>
+        <h1>AI学习资源导航</h1>
     </header>
 
     <main>
         <section class="search-section">
+            <button id="favorites-btn" class="favorites-btn">我的收藏</button>
+            <button id="back-btn" class="back-btn">返回主页</button>
             <input type="text" id="search-input" placeholder="搜索资源...">
             <button id="search-btn">搜索</button>
         </section>
@@ -44,12 +84,20 @@
             <h2>推荐资源</h2>
             <div class="resource-grid" id="resource-list">
                 <!-- 资源列表将通过JavaScript动态生成 -->
+                <!-- 示例卡片结构，仅用于参考，会被JavaScript替换 -->
+                <div class="resource-card" style="display: none;">
+                    <button class="favorite-btn">♡</button>
+                    <span class="resource-type">示例类型</span>
+                    <h3>示例资源标题</h3>
+                    <p>这是一个示例资源描述，展示卡片的基本结构...</p>
+                    <a href="#" target="_blank">查看详情</a>
+                </div>
             </div>
         </section>
     </main>
 
     <footer>
-        <p>机器学习资源导航网站</p>
+        <p>AI学习资源导航网站</p>
     </footer>
 
     <script src="data.js"></script>
